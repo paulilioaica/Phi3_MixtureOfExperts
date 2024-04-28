@@ -285,7 +285,7 @@ def build(
 
     out_cfg = MixtralConfig(**base_cfg.to_dict())
     out_cfg.architectures = ["Phi3ForCausalLM"]
-    out_cfg.num_local_experts = len(config.experts)
+    out_cfg.num_experts = len(config.experts)
     out_cfg.num_experts_per_tok = config.experts_per_token
     out_cfg.sliding_window = None
     if config.dtype:
