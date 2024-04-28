@@ -283,10 +283,15 @@ def build(
         base_cfg_mistral.max_position_embeddings = base_cfg.max_position_embeddings
         base_cfg = base_cfg_mistral
 
+    out_cfg.model_type = "phi3"
     out_cfg = MixtralConfig(**base_cfg.to_dict())
     out_cfg.architectures = ["Phi3ForCausalLM"]
     out_cfg.num_experts = len(config.experts)
     out_cfg.num_experts_per_tok = config.experts_per_token
+    out_cfg.auto_map =  {
+        "AutoConfig": "configuration_phi3.Phi3Config",
+        "AutoModelForCausalLM": "modeling_phi3.Phi3ForCausalLM"
+    }
     out_cfg.sliding_window = None
     if config.dtype:
         out_cfg.torch_dtype = config.dtype
