@@ -324,7 +324,7 @@ def build(
         out_dtype = None
 
     logging.info("Copying parameters...")
-    MISTRAL_INFO = mergekit.architecture.PHI3_INFO
+    MISTRAL_INFO = mergekit.architecture.PHI2_INFO
     for tensor_name in MISTRAL_INFO.pre_weight_names + MISTRAL_INFO.post_weight_names:
         tensor = base_loader.get_tensor(tensor_name)
         if not out_dtype:
@@ -370,7 +370,6 @@ def build(
                     writer.save_tensor(
                         expert_name, tensor.to(dtype=out_dtype), clone=True
                     )
-                    print(expert_name)
                 continue
             
             writer.save_tensor(
@@ -471,7 +470,7 @@ def main(
     config = MistralMOEConfig.model_validate(yaml.safe_load(config_source))
     build(
         config,
-        out_path="merge",
+        out_path=out_path,
         merge_options=merge_options,
         load_in_4bit=load_in_4bit,
         load_in_8bit=load_in_8bit,
